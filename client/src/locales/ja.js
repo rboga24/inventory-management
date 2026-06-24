@@ -6,6 +6,7 @@ export default {
     orders: '注文',
     finance: '財務',
     demandForecast: '需要予測',
+    restocking: '補充',
     companyName: '触媒コンポーネンツ',
     subtitle: '在庫管理システム'
   },
@@ -112,6 +113,7 @@ export default {
     onTimeDelivery: '定時配達',
     itemsCount: '{count}件',
     quantity: '数量',
+    submittedOrders: '提出済み注文',
     table: {
       orderNumber: '注文番号',
       orderId: '注文ID',
@@ -188,6 +190,38 @@ export default {
     }
   },
 
+  // Restocking
+  restocking: {
+    title: '補充',
+    description: '需要予測に基づいた在庫補充計画',
+    budgetConfiguration: '予算設定',
+    allocatedBudget: '割当予算',
+    recommendationsSummary: '推奨概要',
+    recommendedItems: '推奨品目',
+    itemsWithinBudget: '予算内',
+    estimatedCost: '見積コスト',
+    remainingBudget: '残予算',
+    noRecommendations: '補充推奨品目はありません。現在の在庫は予測需要を満たしています。',
+    withinBudget: '含む',
+    exceedsBudget: '予算超過',
+    placeOrder: '注文する',
+    orderSubmitted: '注文が正常に送信されました！詳細は注文タブをご確認ください。',
+    failedToLoad: '推奨の読み込みに失敗しました',
+    failedToSubmit: '注文の送信に失敗しました',
+    noItemsToOrder: '注文する品目がありません',
+    table: {
+      sku: 'SKU',
+      itemName: '品目名',
+      currentDemand: '現在の需要',
+      forecastedDemand: '予測需要',
+      demandGap: '需要ギャップ',
+      quantityOnHand: '手持在庫数',
+      unitCost: '単価',
+      estimatedCost: '見積コスト',
+      status: 'ステータス'
+    }
+  },
+
   // Filters
   filters: {
     timePeriod: '期間',
@@ -204,6 +238,7 @@ export default {
     shipped: '出荷済み',
     processing: '処理中',
     backordered: 'バックオーダー',
+    submitted: '提出済み',
     inStock: '在庫あり',
     lowStock: '在庫僅少',
     adequate: '適量'

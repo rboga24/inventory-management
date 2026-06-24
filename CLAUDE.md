@@ -69,6 +69,12 @@ npm install && npm run dev
 - Data: `server/data/*.json`
 - Styles: `client/src/App.vue`
 
+## Code Comments
+- **Always document non-obvious logic changes with comments**
+- Add comments when the WHY is non-obvious: hidden constraints, subtle invariants, workarounds for specific bugs, or behavior that would surprise a reader
+- Keep comments short (one line max) and focused on reasoning, not restating the code
+- Don't comment obvious, self-explanatory code
+
 ## Design System
 - Colors: Slate/gray (#0f172a, #64748b, #e2e8f0)
 - Status: green/blue/yellow/red
