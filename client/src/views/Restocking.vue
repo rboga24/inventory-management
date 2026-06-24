@@ -1,21 +1,25 @@
 <template>
   <div class="restocking">
     <div class="page-header">
-      <h2>{{ t('restocking.title') }}</h2>
-      <p>{{ t('restocking.description') }}</p>
+      <h2>{{ t("restocking.title") }}</h2>
+      <p>{{ t("restocking.description") }}</p>
     </div>
 
-    <div v-if="loading" class="loading">{{ t('common.loading') }}</div>
+    <div v-if="loading" class="loading">{{ t("common.loading") }}</div>
     <div v-else-if="error" class="error">{{ error }}</div>
     <div v-else>
       <!-- Budget Configuration -->
       <div class="card budget-card">
         <div class="card-header">
-          <h3 class="card-title">{{ t('restocking.budgetConfiguration') }}</h3>
+          <h3 class="card-title">{{ t("restocking.budgetConfiguration") }}</h3>
         </div>
         <div class="budget-controls">
-          <label class="budget-label">{{ t('restocking.allocatedBudget') }}</label>
-          <div class="budget-display">{{ currencySymbol }}{{ budget.toLocaleString() }}</div>
+          <label class="budget-label">{{
+            t("restocking.allocatedBudget")
+          }}</label>
+          <div class="budget-display">
+            {{ currencySymbol }}{{ budget.toLocaleString() }}
+          </div>
           <input
             type="range"
             class="budget-slider"
@@ -35,45 +39,63 @@
       <!-- Recommendations Summary -->
       <div class="stats-grid">
         <div class="stat-card info">
-          <div class="stat-label">{{ t('restocking.recommendedItems') }}</div>
+          <div class="stat-label">{{ t("restocking.recommendedItems") }}</div>
           <div class="stat-value">{{ recommendations.length }}</div>
         </div>
         <div class="stat-card success">
-          <div class="stat-label">{{ t('restocking.itemsWithinBudget') }}</div>
+          <div class="stat-label">{{ t("restocking.itemsWithinBudget") }}</div>
           <div class="stat-value">{{ itemsWithinBudget.length }}</div>
         </div>
         <div class="stat-card warning">
-          <div class="stat-label">{{ t('restocking.estimatedCost') }}</div>
-          <div class="stat-value">{{ currencySymbol }}{{ totalCostOfBudgetItems.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) }}</div>
+          <div class="stat-label">{{ t("restocking.estimatedCost") }}</div>
+          <div class="stat-value">
+            {{ currencySymbol
+            }}{{
+              totalCostOfBudgetItems.toLocaleString(undefined, {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              })
+            }}
+          </div>
         </div>
         <div class="stat-card">
-          <div class="stat-label">{{ t('restocking.remainingBudget') }}</div>
-          <div class="stat-value">{{ currencySymbol }}{{ remainingBudget.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) }}</div>
+          <div class="stat-label">{{ t("restocking.remainingBudget") }}</div>
+          <div class="stat-value">
+            {{ currencySymbol
+            }}{{
+              remainingBudget.toLocaleString(undefined, {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              })
+            }}
+          </div>
         </div>
       </div>
 
       <!-- Recommendations Table -->
       <div class="card">
         <div class="card-header">
-          <h3 class="card-title">{{ t('restocking.recommendationsSummary') }}</h3>
+          <h3 class="card-title">
+            {{ t("restocking.recommendationsSummary") }}
+          </h3>
         </div>
         <div v-if="recommendations.length === 0" class="no-recommendations">
-          {{ t('restocking.noRecommendations') }}
+          {{ t("restocking.noRecommendations") }}
         </div>
         <div v-else class="table-container">
           <table>
             <thead>
               <tr>
                 <th>#</th>
-                <th>{{ t('restocking.table.sku') }}</th>
-                <th>{{ t('restocking.table.itemName') }}</th>
-                <th>{{ t('restocking.table.currentDemand') }}</th>
-                <th>{{ t('restocking.table.forecastedDemand') }}</th>
-                <th>{{ t('restocking.table.demandGap') }}</th>
-                <th>{{ t('restocking.table.quantityOnHand') }}</th>
-                <th>{{ t('restocking.table.unitCost') }}</th>
-                <th>{{ t('restocking.table.estimatedCost') }}</th>
-                <th>{{ t('restocking.table.status') }}</th>
+                <th>{{ t("restocking.table.sku") }}</th>
+                <th>{{ t("restocking.table.itemName") }}</th>
+                <th>{{ t("restocking.table.currentDemand") }}</th>
+                <th>{{ t("restocking.table.forecastedDemand") }}</th>
+                <th>{{ t("restocking.table.demandGap") }}</th>
+                <th>{{ t("restocking.table.quantityOnHand") }}</th>
+                <th>{{ t("restocking.table.unitCost") }}</th>
+                <th>{{ t("restocking.table.estimatedCost") }}</th>
+                <th>{{ t("restocking.table.status") }}</th>
               </tr>
             </thead>
             <tbody>
@@ -83,20 +105,46 @@
                 :class="{ 'excluded-row': !item.included_in_budget }"
               >
                 <td>
-                  <span v-if="item.included_in_budget" class="priority-badge">{{ index + 1 }}</span>
+                  <span v-if="item.included_in_budget" class="priority-badge">{{
+                    index + 1
+                  }}</span>
                   <span v-else class="priority-badge excluded">-</span>
                 </td>
-                <td><strong>{{ item.item_sku }}</strong></td>
+                <td>
+                  <strong>{{ item.item_sku }}</strong>
+                </td>
                 <td>{{ item.item_name }}</td>
                 <td>{{ item.current_demand.toLocaleString() }}</td>
-                <td><strong>{{ item.forecasted_demand.toLocaleString() }}</strong></td>
+                <td>
+                  <strong>{{ item.forecasted_demand.toLocaleString() }}</strong>
+                </td>
                 <td>{{ item.demand_gap.toLocaleString() }}</td>
                 <td>{{ item.quantity_on_hand.toLocaleString() }}</td>
-                <td>{{ currencySymbol }}{{ item.unit_cost.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) }}</td>
-                <td>{{ currencySymbol }}{{ item.estimated_cost.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) }}</td>
                 <td>
-                  <span v-if="item.included_in_budget" class="badge success">{{ t('restocking.withinBudget') }}</span>
-                  <span v-else class="badge danger">{{ t('restocking.exceedsBudget') }}</span>
+                  {{ currencySymbol
+                  }}{{
+                    item.unit_cost.toLocaleString(undefined, {
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2,
+                    })
+                  }}
+                </td>
+                <td>
+                  {{ currencySymbol
+                  }}{{
+                    item.estimated_cost.toLocaleString(undefined, {
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2,
+                    })
+                  }}
+                </td>
+                <td>
+                  <span v-if="item.included_in_budget" class="badge success">{{
+                    t("restocking.withinBudget")
+                  }}</span>
+                  <span v-else class="badge danger">{{
+                    t("restocking.exceedsBudget")
+                  }}</span>
                 </td>
               </tr>
             </tbody>
@@ -111,12 +159,12 @@
           :disabled="submitting"
           @click="submitRestockingOrder"
         >
-          {{ submitting ? t('common.loading') : t('restocking.placeOrder') }}
+          {{ submitting ? t("common.loading") : t("restocking.placeOrder") }}
         </button>
       </div>
 
       <div v-if="submitSuccess" class="submit-success">
-        {{ t('restocking.orderSubmitted') }}
+        {{ t("restocking.orderSubmitted") }}
       </div>
       <div v-if="submitError" class="submit-error">
         {{ submitError }}
@@ -126,87 +174,97 @@
 </template>
 
 <script>
-import { ref, computed, onMounted } from 'vue'
-import { api } from '../api'
-import { useI18n } from '../composables/useI18n'
+import { ref, computed, onMounted } from "vue";
+import { api } from "../api";
+import { useI18n } from "../composables/useI18n";
 
 export default {
-  name: 'Restocking',
+  name: "Restocking",
   setup() {
-    const { t, currentCurrency } = useI18n()
+    const { t, currentCurrency } = useI18n();
 
     // State
-    const loading = ref(true)
-    const error = ref(null)
-    const budget = ref(100000)
-    const recommendations = ref([])
-    const submitting = ref(false)
-    const submitSuccess = ref(false)
-    const submitError = ref(null)
+    const loading = ref(true);
+    const error = ref(null);
+    const budget = ref(100000);
+    const recommendations = ref([]);
+    const submitting = ref(false);
+    const submitSuccess = ref(false);
+    const submitError = ref(null);
 
     // Debounce timer for slider
-    let debounceTimer = null
+    let debounceTimer = null;
 
-    const currencySymbol = computed(() => currentCurrency.value === 'JPY' ? '¥' : '$')
+    const currencySymbol = computed(() =>
+      currentCurrency.value === "JPY" ? "¥" : "$",
+    );
 
     const loadRecommendations = async () => {
       try {
-        loading.value = true
-        error.value = null
-        recommendations.value = await api.getRestockingRecommendations(budget.value)
+        loading.value = true;
+        error.value = null;
+        recommendations.value = await api.getRestockingRecommendations(
+          budget.value,
+        );
       } catch (err) {
-        error.value = t('restocking.failedToLoad') + ': ' + err.message
+        error.value = t("restocking.failedToLoad") + ": " + err.message;
       } finally {
-        loading.value = false
+        loading.value = false;
       }
-    }
+    };
 
     // Debounced handler for slider — 300ms delay to avoid flooding API
     const onBudgetChange = () => {
-      if (debounceTimer) clearTimeout(debounceTimer)
+      if (debounceTimer) clearTimeout(debounceTimer);
       debounceTimer = setTimeout(() => {
-        loadRecommendations()
-      }, 300)
-    }
+        loadRecommendations();
+      }, 300);
+    };
 
     // Computed
-    const itemsWithinBudget = computed(() => recommendations.value.filter(r => r.included_in_budget))
-    const totalCostOfBudgetItems = computed(() => itemsWithinBudget.value.reduce((sum, r) => sum + r.estimated_cost, 0))
-    const remainingBudget = computed(() => budget.value - totalCostOfBudgetItems.value)
+    const itemsWithinBudget = computed(() =>
+      recommendations.value.filter((r) => r.included_in_budget),
+    );
+    const totalCostOfBudgetItems = computed(() =>
+      itemsWithinBudget.value.reduce((sum, r) => sum + r.estimated_cost, 0),
+    );
+    const remainingBudget = computed(
+      () => budget.value - totalCostOfBudgetItems.value,
+    );
 
     // Submit
     const submitRestockingOrder = async () => {
       if (itemsWithinBudget.value.length === 0) {
-        submitError.value = t('restocking.noItemsToOrder')
-        return
+        submitError.value = t("restocking.noItemsToOrder");
+        return;
       }
       try {
-        submitting.value = true
-        submitError.value = null
-        submitSuccess.value = false
+        submitting.value = true;
+        submitError.value = null;
+        submitSuccess.value = false;
         await api.submitRestockingOrder({
-          items: itemsWithinBudget.value.map(item => ({
+          items: itemsWithinBudget.value.map((item) => ({
             sku: item.item_sku,
             name: item.item_name,
             quantity: item.quantity_needed,
-            unit_price: item.unit_cost
+            unit_price: item.unit_cost,
           })),
           total_cost: totalCostOfBudgetItems.value,
-          approved_budget: budget.value
-        })
-        submitSuccess.value = true
+          approved_budget: budget.value,
+        });
+        submitSuccess.value = true;
         setTimeout(() => {
-          submitSuccess.value = false
-          loadRecommendations()
-        }, 2000)
+          submitSuccess.value = false;
+          loadRecommendations();
+        }, 2000);
       } catch (err) {
-        submitError.value = t('restocking.failedToSubmit') + ': ' + err.message
+        submitError.value = t("restocking.failedToSubmit") + ": " + err.message;
       } finally {
-        submitting.value = false
+        submitting.value = false;
       }
-    }
+    };
 
-    onMounted(loadRecommendations)
+    onMounted(loadRecommendations);
 
     return {
       t,
@@ -222,10 +280,10 @@ export default {
       totalCostOfBudgetItems,
       remainingBudget,
       onBudgetChange,
-      submitRestockingOrder
-    }
-  }
-}
+      submitRestockingOrder,
+    };
+  },
+};
 </script>
 
 <style scoped>
